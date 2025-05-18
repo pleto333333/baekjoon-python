@@ -1,0 +1,35 @@
+import sys
+from collections import Counter
+
+input = sys.stdin.readline
+
+N = int(input())
+numbers = [int(input()) for _ in range(N)]
+
+# 1. 산술평균 (반올림, -0은 0으로 처리)
+mean = round(sum(numbers) / N)
+if mean == -0:
+    mean = 0
+
+# 2. 중앙값
+sorted_numbers = sorted(numbers)
+median = sorted_numbers[N // 2]
+
+# 3. 최빈값
+frequency = Counter(sorted_numbers)
+modes = frequency.most_common()
+
+# 최빈값 여러 개일 경우
+max_freq = modes[0][1]
+mode_candidates = [num for num, freq in modes if freq == max_freq]
+mode_candidates.sort()
+mode = mode_candidates[0] if len(mode_candidates) == 1 else mode_candidates[1]
+
+# 4. 범위
+range_value = max(numbers) - min(numbers)
+
+# 출력
+print(mean)
+print(median)
+print(mode)
+print(range_value)
